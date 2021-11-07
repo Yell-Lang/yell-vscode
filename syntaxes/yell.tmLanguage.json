@@ -1,0 +1,58 @@
+{	
+	"name": "Yell",
+	"patterns": [
+		{
+			"include": "#punctuation"
+		},
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#string"
+		},
+		{
+			"include": "#comment"
+		},
+		{
+			"include": "#expr"
+		},
+		{
+			"include": "#shebang"
+		}
+	],
+	"repository": {
+		"punctuation": {
+			"include": "#punctuation-semicolon"
+		},
+		"shebang": {
+			"name": "comment.line.shebang.yell",
+			"match": "\\A(#!).*(?=$)"
+		},
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.commands.yell",
+				"match": "\\b(code_start|print|println|system|var|read|sleep|toint|import)\\b"
+			}]
+		},
+		"punctuation-semicolon": {
+			"name": "punctuation.terminator.statement.yell",
+			"match": ";"
+		},
+		"comment": {
+			"name": "comment.block.yell",
+			"begin": "/\\*",
+			"end": "\\*/"
+		},
+		"string": {
+			"name": "string.quoted.double.yell",
+			"begin": "\"",
+			"end": "\""
+		},
+		"expr": {
+			"name": "string.quoted.expr.yell",
+			"begin": "n\"",
+			"end": "\""
+		}
+	},
+	"scopeName": "source.yell"
+}
