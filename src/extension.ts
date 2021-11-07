@@ -44,7 +44,12 @@ function isStringPresent(name: string, line: string, lineNum: number, startNum: 
 }
 
 function updateDiagnostics(editor: vscode.TextEditor): void {
-    diagnostics = []
+    diagnostics = [];
+
+    if (editor.document.getText().trim() === '') {
+        diagnosticCollection.clear();
+        return;
+    }
 
     for (let lineNum = 0; lineNum < editor.document.lineCount; ++lineNum) {
         const lineAt = editor.document.lineAt(lineNum);

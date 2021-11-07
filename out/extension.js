@@ -40,6 +40,10 @@ function isStringPresent(name, line, lineNum, startNum) {
 }
 function updateDiagnostics(editor) {
     diagnostics = [];
+    if (editor.document.getText().trim() === '') {
+        diagnosticCollection.clear();
+        return;
+    }
     for (let lineNum = 0; lineNum < editor.document.lineCount; ++lineNum) {
         const lineAt = editor.document.lineAt(lineNum);
         const document = editor.document;
