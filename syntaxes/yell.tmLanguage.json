@@ -2,7 +2,10 @@
 	"name": "Yell",
 	"patterns": [
 		{
-			"include": "#punctuation"
+			"include": "#punctuation-colon"
+		},
+		{
+			"include": "#punctuation-semicolon"
 		},
 		{
 			"include": "#keywords"
@@ -21,9 +24,6 @@
 		}
 	],
 	"repository": {
-		"punctuation": {
-			"include": "#punctuation-semicolon"
-		},
 		"shebang": {
 			"name": "comment.line.shebang.yell",
 			"match": "\\A(#!).*(?=$)"
@@ -33,6 +33,10 @@
 				"name": "keyword.commands.yell",
 				"match": "\\b(code_start|print|println|system|var|read|sleep|toint|import)\\b"
 			}]
+		},
+		"punctuation-colon": {
+			"name": "punctuation.colon.yell",
+			"match": ":"
 		},
 		"punctuation-semicolon": {
 			"name": "punctuation.terminator.statement.yell",
