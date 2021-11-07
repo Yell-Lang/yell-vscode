@@ -10,7 +10,7 @@ A language extension for Yell in VSCode.
 
 ## Requirements
 
-It is recommended that you install Yell to be able to run the code from the terminal.
+It is recommended that you install Yell to be able to run the code from the terminal. Also, it's recommended that you use Linux or macOS since some features might be broken on Windows.
 
 ## Known Issues
 

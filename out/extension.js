@@ -9,7 +9,7 @@ let diagnostics = [];
 class YellCompletionItemProvider {
     provideCompletionItems(document, position, token) {
         const linePrefix = document.lineAt(position).text.substr(0, position.character);
-        if (linePrefix.endsWith('print ') || linePrefix.endsWith('println ')
+        if (linePrefix.endsWith('print ') || linePrefix.endsWith('println ') || linePrefix.endsWith('sleep ')
             || linePrefix.endsWith('system ')) {
             return [
                 new vscode.CompletionItem('"";', vscode.CompletionItemKind.Property),
@@ -23,6 +23,9 @@ class YellCompletionItemProvider {
         return [
             new vscode.CompletionItem('code_start;', vscode.CompletionItemKind.Function),
             new vscode.CompletionItem('print', vscode.CompletionItemKind.Function),
+            new vscode.CompletionItem('var', vscode.CompletionItemKind.Function),
+            new vscode.CompletionItem('read', vscode.CompletionItemKind.Function),
+            new vscode.CompletionItem('sleep', vscode.CompletionItemKind.Function),
             new vscode.CompletionItem('system', vscode.CompletionItemKind.Function),
             new vscode.CompletionItem('println', vscode.CompletionItemKind.Function),
             new vscode.CompletionItem('println "Hello World!";', vscode.CompletionItemKind.Snippet),
