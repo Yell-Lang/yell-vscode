@@ -117,50 +117,9 @@ function updateDiagnostics(editor: vscode.TextEditor): void {
 }
 
 export function activate(ctx: vscode.ExtensionContext): void {
-    let documentSelector:vscode.DocumentSelector = { scheme: 'file', language: 'yell' };
+    ctx.subscriptions.push(vscode.commands.registerCommand('yell.run_code', () => {
+        vscode.window.showInformationMessage('To run the code, open a VSCode terminal and run (replacing <DIR> and <FILE> with the name of the directory and the name of the file): cd <DIR> && yell <FILE>');
+    }));
 
-    vscode.tasks.registerTaskProvider('yell_run', {
-        provideTasks(token?: vscode.CancellationToken) {
-            if (vscode.window.activeTextEditor) {
-                if (fs.existsSync(vscode.window.activeTextEditor.document.fileName)) {
-                    var file = vscode.window.activeTextEditor.document.fileName
-                    var execution = new vscode.ShellExecution(`cd ${path.dirname(file)} && yell ${file}`);
-                    var problemMatchers = ["$yellProblemMatcher"];
-                    return [
-                        new vscode.Task({type: 'yell_run'}, vscode.TaskScope.Workspace,
-                            "Run", "yell-vscode", execution, problemMatchers)
-                    ];
-                } else {
-                    vscode.window.showErrorMessage('Looks like you haven\'t created the file.')
-                }
-            } else {
-                vscode.window.showErrorMessage('There is no active text editor.')
-            }
-        },
-        resolveTask(task: vscode.Task, token?: vscode.CancellationToken) {
-            return task;
-        }
-    });
-
-    ctx.subscriptions.push(
-        vscode.languages.registerCompletionItemProvider(documentSelector, new YellCompletionItemProvider(), " "));
-        let disposable = vscode.commands.registerCommand('yell.run_code', () => {
-            if (vscode.window.activeTextEditor) {
-                if (fs.existsSync(vscode.window.activeTextEditor.document.fileName)) {
-                    vscode.window.showInformationMessage('The last saved file state will be run if you haven\'t saved your latest changes.')
-                    const terminal = vscode.window.createTerminal('Yell Terminal');
-                    terminal.sendText(`yell ${vscode.window.activeTextEditor!.document.fileName}`);
-                } else {
-                    vscode.window.showErrorMessage('Looks like you haven\'t created the file.')
-                }
-            }
-    });
-
-    ctx.subscriptions.push(disposable);
-
-    var activeEditor = vscode.window.activeTextEditor
-
-	if (activeEditor) {
-        setInterval(() => { if (vscode.window.activeTextEditor) { updateDiagnostics(vscode.window.activeTextEditor) } }, 500);
-	}
+    setInterval(() => { if (vscode.window.activeTextEditor) { updateDiagnostics(vscode.window.activeTextEditor) } }, 500);
 }
