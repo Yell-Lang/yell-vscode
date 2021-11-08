@@ -86,6 +86,8 @@ function updateDiagnostics(editor: vscode.TextEditor): void {
                     break;
                 case 'if':
                     break;
+                case 'alias':
+                    break;
                 case 'repeat':
                     break;
                 case 'read':
