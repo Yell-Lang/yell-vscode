@@ -100,13 +100,7 @@ function updateDiagnostics(editor: vscode.TextEditor): void {
                 case 'code_start;':
                     break;
                 case 'sleep':
-                    if (!(line.split(' ')[1].startsWith('n"') && (line.split(' ')[1].endsWith('"') || line.split(' ')[1].endsWith('";')))) {
-                        diagnostics.push(new vscode.Diagnostic(
-                            new vscode.Range(new vscode.Position(lineNum, startNum), new vscode.Position(lineNum, startNum + line.split(' ')[0].length)),
-                            'sleep requires an n"" string/number',
-                            vscode.DiagnosticSeverity.Error,
-                        ));
-                    }
+                    break;
                 case 'import':
                     break;
                 default:
