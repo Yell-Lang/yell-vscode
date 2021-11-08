@@ -33,8 +33,16 @@ class YellCompletionItemProvider implements vscode.CompletionItemProvider {
 }
 
 function isStringPresent(name: string, line: string, lineNum: number, startNum: number): void {
-    var string = line.substr(line.indexOf(" ") + 1)!;
-    if (!(string.endsWith('"') || string.endsWith('";'))) {
+    var _string:string = line.substr(line.indexOf(" ") + 1).replace(/\s+/g, '');
+    var isString:boolean = false;
+    if (_string.endsWith("'") || _string.endsWith("';")) {
+        isString = true;
+    } else if (_string.endsWith('"') || _string.endsWith('";')) {
+        isString = true;
+    } else if (_string.endsWith('`') || _string.endsWith('`;')) {
+        isString = true;
+    }
+    if (!isString) {
         diagnostics.push(new vscode.Diagnostic(
             new vscode.Range(new vscode.Position(lineNum, startNum), new vscode.Position(lineNum, startNum + line.split(' ')[0].length)),
             `${name} requires a string as an argument`,
@@ -72,7 +80,11 @@ function updateDiagnostics(editor: vscode.TextEditor): void {
                     break;
                 case 'var':
                     break;
+                case '&&':
+                    break;
                 case 'read':
+                    break;
+                case 'a':
                     break;
                 case 'system':
                     isStringPresent('var', line, lineNum, startNum)
@@ -97,16 +109,6 @@ function updateDiagnostics(editor: vscode.TextEditor): void {
                             vscode.DiagnosticSeverity.Error,
                         ));
                     }
-            }
-
-            if (!line.endsWith(';')) {
-                if (!(line.startsWith('#!') || line.startsWith('/*') || line.endsWith('*/') || line === '')) {
-                    diagnostics.push(new vscode.Diagnostic(
-                        new vscode.Range(new vscode.Position(lineNum, endNum), new vscode.Position(lineNum, endNum)),
-                        'missing semicolon',
-                        vscode.DiagnosticSeverity.Error,
-                    ));
-                }
             }
 
             diagnosticCollection.set(document.uri, diagnostics);

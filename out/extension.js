@@ -32,8 +32,18 @@ class YellCompletionItemProvider {
     }
 }
 function isStringPresent(name, line, lineNum, startNum) {
-    var string = line.substr(line.indexOf(" ") + 1);
-    if (!(string.endsWith('"') || string.endsWith('";'))) {
+    var _string = line.substr(line.indexOf(" ") + 1).replace(/\s+/g, '');
+    var isString = false;
+    if (_string.endsWith("'") || _string.endsWith("';")) {
+        isString = true;
+    }
+    else if (_string.endsWith('"') || _string.endsWith('";')) {
+        isString = true;
+    }
+    else if (_string.endsWith('`') || _string.endsWith('`;')) {
+        isString = true;
+    }
+    if (!isString) {
         diagnostics.push(new vscode.Diagnostic(new vscode.Range(new vscode.Position(lineNum, startNum), new vscode.Position(lineNum, startNum + line.split(' ')[0].length)), `${name} requires a string as an argument`, vscode.DiagnosticSeverity.Error));
     }
 }
@@ -63,7 +73,11 @@ function updateDiagnostics(editor) {
                     break;
                 case 'var':
                     break;
+                case '&&':
+                    break;
                 case 'read':
+                    break;
+                case 'a':
                     break;
                 case 'system':
                     isStringPresent('var', line, lineNum, startNum);
@@ -80,11 +94,6 @@ function updateDiagnostics(editor) {
                     if (!(line.startsWith('#!') || line.startsWith('/*') || line.endsWith('*/') || line === '')) {
                         diagnostics.push(new vscode.Diagnostic(new vscode.Range(new vscode.Position(lineNum, startNum), new vscode.Position(lineNum, startNum + line.split(' ')[0].length)), 'no such function: ' + line.split(' ')[0], vscode.DiagnosticSeverity.Error));
                     }
-            }
-            if (!line.endsWith(';')) {
-                if (!(line.startsWith('#!') || line.startsWith('/*') || line.endsWith('*/') || line === '')) {
-                    diagnostics.push(new vscode.Diagnostic(new vscode.Range(new vscode.Position(lineNum, endNum), new vscode.Position(lineNum, endNum)), 'missing semicolon', vscode.DiagnosticSeverity.Error));
-                }
             }
             diagnosticCollection.set(document.uri, diagnostics);
         }

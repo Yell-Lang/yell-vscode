@@ -11,13 +11,25 @@
 			"include": "#keywords"
 		},
 		{
-			"include": "#string"
+			"include": "#statement-and"
+		},
+		{
+			"include": "#string-single"
+		},
+		{
+			"include": "#string-double"
+		},
+		{
+			"include": "#bool"
 		},
 		{
 			"include": "#comment"
 		},
 		{
-			"include": "#expr"
+			"include": "#expr-single"
+		},
+		{
+			"include": "#expr-double"
 		},
 		{
 			"include": "#shebang"
@@ -31,7 +43,7 @@
 		"keywords": {
 			"patterns": [{
 				"name": "keyword.commands.yell",
-				"match": "\\b(code_start|print|println|system|var|read|sleep|toint|import)\\b"
+				"match": "\\b(code_start|print|println|system|var|read|sleep|toint|import|while|repeat|if|a|alias)\\b"
 			}]
 		},
 		"punctuation-colon": {
@@ -47,13 +59,32 @@
 			"begin": "/\\*",
 			"end": "\\*/"
 		},
-		"string": {
+		"statement-and": {
+			"name": "keyword.operator.statement.and.yell",
+			"match": "&&"
+		},
+		"string-double": {
 			"name": "string.quoted.double.yell",
 			"begin": "\"",
 			"end": "\""
 		},
-		"expr": {
-			"name": "string.quoted.expr.yell",
+		"string-single": {
+			"name": "string.quoted.single.yell",
+			"begin": "'",
+			"end": "'"
+		},
+		"bool": {
+			"name": "constant.language.boolean.yell",
+			"begin": "b`",
+			"end": "`"
+		},
+		"expr-single": {
+			"name": "constant.numeric",
+			"begin": "n'",
+			"end": "'"
+		},
+		"expr-double": {
+			"name": "constant.numeric",
 			"begin": "n\"",
 			"end": "\""
 		}
