@@ -1,7 +1,8 @@
 {
     "name": "yell-vscode",
-    "displayName": "yell-vscode",
+    "displayName": "Yell - VS Code",
     "description": "Language support for Yell",
+    "icon": "images/yell-logo.png",
     "version": "0.0.1",
     "publisher": "rs2009",
     "engines": {
