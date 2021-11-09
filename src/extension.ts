@@ -1,6 +1,5 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import * as fs from 'fs';
 
 let diagnosticCollection = vscode.languages.createDiagnosticCollection("yell");
 let diagnostics : vscode.Diagnostic[] = [];
@@ -35,11 +34,11 @@ class YellCompletionItemProvider implements vscode.CompletionItemProvider {
 function isStringPresent(name: string, line: string, lineNum: number, startNum: number): void {
     var _string:string = line.substr(line.indexOf(" ") + 1).replace(/\s+/g, '');
     var isString:boolean = false;
-    if (_string.endsWith("'") || _string.endsWith("';")) {
+    if (_string.endsWith("'") || _string.endsWith("';") || _string.endsWith("'&&")) {
         isString = true;
-    } else if (_string.endsWith('"') || _string.endsWith('";')) {
+    } else if (_string.endsWith('"') || _string.endsWith('";') || _string.endsWith("\"&&")) {
         isString = true;
-    } else if (_string.endsWith('`') || _string.endsWith('`;')) {
+    } else if (_string.endsWith('`') || _string.endsWith('`;') || _string.endsWith("`&&")) {
         isString = true;
     }
     if (!isString) {
@@ -68,7 +67,6 @@ function updateDiagnostics(editor: vscode.TextEditor): void {
             continue;
         }
         const line = line_notrim.trim();
-        const endNum = lineAt.range.end.character;
     
         if (document && path.basename(document.uri.fsPath).endsWith('.yell')) {
             switch (line.split(' ')[0]) {
@@ -107,7 +105,7 @@ function updateDiagnostics(editor: vscode.TextEditor): void {
                     if (!(line.startsWith('#!') || line.startsWith('/*') || line.endsWith('*/') || line === '')) {
                         diagnostics.push(new vscode.Diagnostic(
                             new vscode.Range(new vscode.Position(lineNum, startNum), new vscode.Position(lineNum, startNum + line.split(' ')[0].length)),
-                            'no such function: ' + line.split(' ')[0],
+                              'no such function: ' + line.split(' ')[0],
                             vscode.DiagnosticSeverity.Error,
                         ));
                     }
@@ -121,9 +119,16 @@ function updateDiagnostics(editor: vscode.TextEditor): void {
 }
 
 export function activate(ctx: vscode.ExtensionContext): void {
-    ctx.subscriptions.push(vscode.commands.registerCommand('yell.run_code', () => {
-        vscode.window.showInformationMessage('To run the code, open a VSCode terminal and run (replacing <DIR> and <FILE> with the name of the directory and the name of the file): cd <DIR> && yell <FILE>');
-    }));
+    let documentSelector = { scheme: 'file', language: 'yell' };
+
+    try {
+        ctx.subscriptions.push(vscode.commands.registerCommand('yell.run_code', () => {
+            vscode.window.showInformationMessage('To run the code, open a VSCode terminal and run (replacing <DIR> and <FILE> with the name of the directory and the name of the file): cd <DIR> && yell <FILE>');
+        }));
+    }
+    catch (error) { }
+
+    ctx.subscriptions.push(vscode.languages.registerCompletionItemProvider(documentSelector, new YellCompletionItemProvider(), " "));
 
     setInterval(() => { if (vscode.window.activeTextEditor) { updateDiagnostics(vscode.window.activeTextEditor) } }, 500);
 }
