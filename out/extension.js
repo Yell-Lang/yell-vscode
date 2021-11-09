@@ -31,6 +31,22 @@ class YellCompletionItemProvider {
         ];
     }
 }
+function isStringPresent(name, line, lineNum, startNum) {
+    var _string = line.substr(line.indexOf(" ") + 1).replace(/\s+/g, '');
+    var isString = false;
+    if (_string.endsWith("'") || _string.endsWith("';") || _string.endsWith("'&&")) {
+        isString = true;
+    }
+    else if (_string.endsWith('"') || _string.endsWith('";') || _string.endsWith("\"&&")) {
+        isString = true;
+    }
+    else if (_string.endsWith('`') || _string.endsWith('`;') || _string.endsWith("`&&")) {
+        isString = true;
+    }
+    if (!isString) {
+        diagnostics.push(new vscode.Diagnostic(new vscode.Range(new vscode.Position(lineNum, startNum), new vscode.Position(lineNum, startNum + line.split(' ')[0].length)), `${name} requires a string as an argument`, vscode.DiagnosticSeverity.Error));
+    }
+}
 function updateDiagnostics(editor) {
     diagnostics = [];
     if (editor.document.getText().trim() === '') {
@@ -49,8 +65,10 @@ function updateDiagnostics(editor) {
         if (document && path.basename(document.uri.fsPath).endsWith('.yell')) {
             switch (line.split(' ')[0]) {
                 case 'print':
+                    isStringPresent('print', line, lineNum, startNum);
                     break;
                 case 'println':
+                    isStringPresent('println', line, lineNum, startNum);
                     break;
                 case 'var':
                     break;
@@ -69,6 +87,7 @@ function updateDiagnostics(editor) {
                 case 'a':
                     break;
                 case 'system':
+                    isStringPresent('var', line, lineNum, startNum);
                     break;
                 case 'code_start;':
                     break;
