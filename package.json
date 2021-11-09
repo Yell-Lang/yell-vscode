@@ -4,7 +4,7 @@
     "description": "Language support for Yell",
     "icon": "images/yell-logo.png",
     "version": "0.1.0",
-    "publisher": "rs2009",
+    "publisher": "yell-lang",
     "engines": {
         "vscode": "^1.62.0"
     },
