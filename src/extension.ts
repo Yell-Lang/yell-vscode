@@ -11,11 +11,12 @@ class YellCompletionItemProvider implements vscode.CompletionItemProvider {
             if (linePrefix.endsWith('print ') || linePrefix.endsWith('println ') || linePrefix.endsWith('sleep ')
                 || linePrefix.endsWith('system ')) {
                 return [
+                    new vscode.CompletionItem("'';", vscode.CompletionItemKind.Property),
                     new vscode.CompletionItem('"";', vscode.CompletionItemKind.Property),
                 ]
             } else if (linePrefix.endsWith('read ')) {
                 return [
-                    new vscode.CompletionItem('"input" "input_var";', vscode.CompletionItemKind.Property),
+                    new vscode.CompletionItem('"input: " "input_var";', vscode.CompletionItemKind.Property),
                 ]
             }
             return [
@@ -24,7 +25,13 @@ class YellCompletionItemProvider implements vscode.CompletionItemProvider {
                 new vscode.CompletionItem('var', vscode.CompletionItemKind.Function),
                 new vscode.CompletionItem('read', vscode.CompletionItemKind.Function),
                 new vscode.CompletionItem('sleep', vscode.CompletionItemKind.Function),
+                new vscode.CompletionItem('a', vscode.CompletionItemKind.Function),
+                new vscode.CompletionItem('import', vscode.CompletionItemKind.Function),
                 new vscode.CompletionItem('system', vscode.CompletionItemKind.Function),
+                new vscode.CompletionItem('python', vscode.CompletionItemKind.Function),
+                new vscode.CompletionItem('while', vscode.CompletionItemKind.Function),
+                new vscode.CompletionItem('if', vscode.CompletionItemKind.Function),
+                new vscode.CompletionItem('repeat', vscode.CompletionItemKind.Function),
                 new vscode.CompletionItem('println', vscode.CompletionItemKind.Function),
                 new vscode.CompletionItem('println "Hello World!";', vscode.CompletionItemKind.Snippet),
             ]
@@ -89,6 +96,8 @@ function updateDiagnostics(editor: vscode.TextEditor): void {
                 case 'repeat':
                     break;
                 case 'read':
+                    break;
+                case 'python':
                     break;
                 case 'a':
                     break;

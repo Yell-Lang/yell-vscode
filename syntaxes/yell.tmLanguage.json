@@ -43,7 +43,7 @@
 		"keywords": {
 			"patterns": [{
 				"name": "keyword.commands.yell",
-				"match": "\\b(code_start|print|println|system|var|read|sleep|toint|import|while|repeat|if|a|alias)\\b"
+				"match": "\\b(code_start|print|println|system|var|read|sleep|toint|import|while|repeat|if|a|python|alias)\\b"
 			}]
 		},
 		"punctuation-colon": {

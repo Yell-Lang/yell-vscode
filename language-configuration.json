@@ -8,7 +8,7 @@
         ["'", "'"],
         ["\"", "\""],
         ["n'", "'"],
-        ["n\"", "n\""],
+        ["n\"", "\""],
         ["b`", "`"],
     ],
     // symbols that can be used to surround a selection
