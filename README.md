@@ -18,6 +18,6 @@ It is recommended that you install Yell to be able to run the code from the term
 
 ## Release Notes
 
-### 0.0.1
+### 0.1.0
 
 Initial release of yell-vscode.
