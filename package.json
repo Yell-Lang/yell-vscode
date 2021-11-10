@@ -3,7 +3,7 @@
     "displayName": "Yell - VS Code",
     "description": "Language support for Yell",
     "icon": "images/yell-logo.png",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "publisher": "yell-lang",
     "engines": {
         "vscode": "^1.62.0"

@@ -66,12 +66,12 @@
 		"string-double": {
 			"name": "string.quoted.double.yell",
 			"begin": "\"",
-			"end": "\""
+			"end": "(\\\\.|[^\"])*\""
 		},
 		"string-single": {
 			"name": "string.quoted.single.yell",
 			"begin": "'",
-			"end": "'"
+			"end": "(\\\\.|[^'])*'"
 		},
 		"bool": {
 			"name": "constant.language.boolean.yell",
